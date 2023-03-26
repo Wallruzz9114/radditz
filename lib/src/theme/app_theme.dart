@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:radditz/constants/constants.dart';
+import 'package:radditz/src/constants/constants.dart';
 
 class AppTheme {
   static ThemeData theme = ThemeData.dark().copyWith(

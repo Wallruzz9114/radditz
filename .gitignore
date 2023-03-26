@@ -16,6 +16,7 @@
 *.iws
 .idea/*
 .env.dart
+.env
 
 # Visual Studio Code related
 .classpath
