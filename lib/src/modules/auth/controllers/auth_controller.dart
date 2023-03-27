@@ -40,7 +40,7 @@ class AuthController extends StateNotifier<bool> {
         final String username = getUsernameFromEmail(email);
 
         final AppUser newAppUser = AppUser(
-          uid: 'uid_$username',
+          uid: a.$id,
           email: email,
           username: username,
           followers: const <String>[],

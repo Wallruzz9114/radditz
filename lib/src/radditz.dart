@@ -13,9 +13,9 @@ class Radditz extends ConsumerWidget {
   @override
   MaterialApp build(BuildContext context, WidgetRef ref) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'rADDiTz',
         theme: AppTheme.theme,
-        home: ref.watch(currentUserProvider).when(
+        home: ref.watch(getCurrentUserProvider).when(
               data: (Account? user) {
                 if (user != null) {
                   return const HomeScreen();

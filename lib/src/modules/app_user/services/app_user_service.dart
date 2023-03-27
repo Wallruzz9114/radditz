@@ -1,4 +1,5 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:radditz/src/common/common.dart';
 import 'package:radditz/src/constants/constants.dart';
@@ -16,7 +17,7 @@ class AppUserService implements IAppUserService {
       await _databases.createDocument(
         databaseId: AppwriteConstants.databaseId!,
         collectionId: AppwriteConstants.usersCollection!,
-        documentId: ID.unique(),
+        documentId: appUser.uid,
         data: appUser.toMap(),
       );
 
@@ -29,4 +30,11 @@ class AppUserService implements IAppUserService {
       return left(Failure(error.toString(), stackTrace));
     }
   }
+
+  @override
+  Future<Document> getAppUser(String uid) async => _databases.getDocument(
+        databaseId: AppwriteConstants.databaseId!,
+        collectionId: AppwriteConstants.usersCollection!,
+        documentId: uid,
+      );
 }
