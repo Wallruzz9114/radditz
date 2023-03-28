@@ -1,6 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:radditz/src/modules/auth/providers/providers.dart';
+import 'package:radditz/src/common/common.dart';
 
 final Provider<Databases> appwriteDatabasesProvider =
     Provider<Databases>((ProviderRef<Databases> ref) {

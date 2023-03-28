@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:radditz/src/constants/constants.dart';
+import 'package:radditz/src/modules/post/screens/screens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,6 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ];
 
+  void goToCreatePostScreen() =>
+      Navigator.push(context, CreatePostScreen.route());
+
   void changeScreen(int index) {
     setState(() {
       _currentScreenIndex = index;
@@ -63,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => goToCreatePostScreen(),
           child: const Icon(
             Icons.add,
             color: PalleteConstants.whiteColor,

@@ -1,6 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:radditz/src/modules/auth/providers/appwrite_client_provider.dart';
+import 'package:radditz/src/common/common.dart';
 
 final Provider<Account> appwriteAccountProvider =
     Provider<Account>((ProviderRef<Account> ref) {
