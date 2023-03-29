@@ -88,4 +88,20 @@ class PostController extends StateNotifier<bool> {
         .map((model.Document post) => Post.fromMap(post.data))
         .toList();
   }
+
+  Future<void> likePost(Post post, AppUser currentUser) async {
+    final List<String> likes = post.likes;
+
+    if (post.likes.contains(currentUser.uid)) {
+      likes.remove(currentUser.uid);
+    } else {
+      likes.add(currentUser.uid);
+    }
+
+    post = post.copyWith(likes: likes);
+    final Either<Failure, model.Document> response =
+        await _postService.likePost(post);
+
+    response.fold((Failure l) => null, (model.Document r) => null);
+  }
 }

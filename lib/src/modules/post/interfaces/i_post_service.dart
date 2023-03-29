@@ -11,4 +11,5 @@ abstract class IPostService {
   Future<List<String>> uploadImage(List<File> files);
   Future<List<model.Document>> getPosts();
   Stream<RealtimeMessage> getLatestPost();
+  Future<Either<Failure, model.Document>> likePost(Post post);
 }

@@ -9,11 +9,11 @@ import 'package:radditz/src/models/models.dart';
 import 'package:radditz/src/modules/post/interfaces/intefaces.dart';
 
 class PostService implements IPostService {
-  PostService(
-      {required Databases databases,
-      required Storage storage,
-      required Realtime realtime})
-      : _databases = databases,
+  PostService({
+    required Databases databases,
+    required Storage storage,
+    required Realtime realtime,
+  })  : _databases = databases,
         _storage = storage,
         _realtime = realtime;
 
@@ -72,4 +72,24 @@ class PostService implements IPostService {
   Stream<RealtimeMessage> getLatestPost() => _realtime.subscribe(<String>[
         'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.postsCollection}.documents'
       ]).stream;
+
+  @override
+  Future<Either<Failure, model.Document>> likePost(Post post) async {
+    try {
+      final model.Document response = await _databases.updateDocument(
+        databaseId: AppwriteConstants.databaseId!,
+        collectionId: AppwriteConstants.postsCollection!,
+        documentId: post.id,
+        data: <String, dynamic>{'likes': post.likes},
+      );
+
+      return right(response);
+    } on AppwriteException catch (error, stackTrace) {
+      return left(
+        Failure(error.message ?? 'Unexpected AppwriteException', stackTrace),
+      );
+    } catch (error, stackTrace) {
+      return left(Failure(error.toString(), stackTrace));
+    }
+  }
 }
