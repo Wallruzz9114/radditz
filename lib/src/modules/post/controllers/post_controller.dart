@@ -80,4 +80,12 @@ class PostController extends StateNotifier<bool> {
 
     state = false;
   }
+
+  Future<List<Post>> getPosts() async {
+    final List<model.Document> postsList = await _postService.getPosts();
+
+    return postsList
+        .map((model.Document post) => Post.fromMap(post.data))
+        .toList();
+  }
 }

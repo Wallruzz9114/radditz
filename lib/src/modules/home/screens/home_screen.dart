@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:radditz/src/constants/constants.dart';
 import 'package:radditz/src/modules/post/screens/screens.dart';
+import 'package:radditz/src/modules/post/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: IndexedStack(
           index: _currentScreenIndex,
           children: const <Widget>[
-            Text('Feed Screen'),
+            PostsList(),
             Text('Search Screen'),
             Text('Notifications Screen'),
           ],

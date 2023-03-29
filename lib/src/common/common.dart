@@ -3,6 +3,7 @@ export './enums/post_type.dart';
 export './providers/appwrite_account_provider.dart';
 export './providers/appwrite_client_provider.dart';
 export './providers/appwrite_databases_provider.dart';
+export './providers/appwrite_realtime_provider.dart';
 export './providers/appwrite_storage_provider.dart';
 export './screens/error_screen.dart';
 export './screens/loading_screen.dart';

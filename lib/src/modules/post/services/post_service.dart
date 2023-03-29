@@ -9,14 +9,17 @@ import 'package:radditz/src/models/models.dart';
 import 'package:radditz/src/modules/post/interfaces/intefaces.dart';
 
 class PostService implements IPostService {
-  PostService({
-    required Databases databases,
-    required Storage storage,
-  })  : _databases = databases,
-        _storage = storage;
+  PostService(
+      {required Databases databases,
+      required Storage storage,
+      required Realtime realtime})
+      : _databases = databases,
+        _storage = storage,
+        _realtime = realtime;
 
   final Databases _databases;
   final Storage _storage;
+  final Realtime _realtime;
 
   @override
   Future<Either<Failure, model.Document>> createPost(Post post) async {
@@ -53,4 +56,20 @@ class PostService implements IPostService {
 
     return imageLinks;
   }
+
+  @override
+  Future<List<model.Document>> getPosts() async {
+    final model.DocumentList posts = await _databases.listDocuments(
+      databaseId: AppwriteConstants.databaseId!,
+      collectionId: AppwriteConstants.postsCollection!,
+      queries: <String>[Query.orderDesc('postedAt')],
+    );
+
+    return posts.documents;
+  }
+
+  @override
+  Stream<RealtimeMessage> getLatestPost() => _realtime.subscribe(<String>[
+        'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.postsCollection}.documents'
+      ]).stream;
 }

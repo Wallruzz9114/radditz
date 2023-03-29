@@ -6,5 +6,6 @@ final Provider<PostService> postServiceProvider =
     Provider<PostService>((ProviderRef<PostService> ref) {
   return PostService(
       databases: ref.watch(appwriteDatabasesProvider),
-      storage: ref.watch(appwriteStorageProvider));
+      storage: ref.watch(appwriteStorageProvider),
+      realtime: ref.watch(appwriteRealtimeProvider));
 });

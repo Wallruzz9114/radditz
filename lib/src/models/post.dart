@@ -89,7 +89,7 @@ class Post {
     result.addAll(<String, dynamic>{'link': link});
     result.addAll(<String, dynamic>{'imageLinks': imageLinks});
     result.addAll(<String, dynamic>{'uid': uid});
-    result.addAll(<String, dynamic>{'postType': postType.toString()});
+    result.addAll(<String, dynamic>{'postType': postType.type});
     result.addAll(<String, dynamic>{
       'postedAt': postedAt.millisecondsSinceEpoch,
     });
