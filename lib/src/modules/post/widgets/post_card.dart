@@ -42,6 +42,25 @@ class PostCard extends ConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              if (post.repostedBy.isNotEmpty)
+                                Row(
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      AssetConstants.repostIcon,
+                                      color: PalleteConstants.greyColor,
+                                      height: 20,
+                                    ),
+                                    const SizedBox(width: 2),
+                                    Text(
+                                      '${post.repostedBy} reposted!',
+                                      style: const TextStyle(
+                                        color: PalleteConstants.greyColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               Row(
                                 children: <Widget>[
                                   Container(
@@ -100,7 +119,16 @@ class PostCard extends ConsumerWidget {
                                     PostCardIcon(
                                       pathName: AssetConstants.repostIcon,
                                       text: (post.reshareCount).toString(),
-                                      onTap: () {},
+                                      onTap: () {
+                                        ref
+                                            .read(
+                                                postControllerProvider.notifier)
+                                            .sharePost(
+                                              post,
+                                              currentUser,
+                                              context,
+                                            );
+                                      },
                                     ),
                                     const SizedBox(width: 8),
                                     LikeButton(

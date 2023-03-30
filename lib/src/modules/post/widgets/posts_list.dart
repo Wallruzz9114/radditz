@@ -25,6 +25,21 @@ class PostsList extends ConsumerWidget {
                       if (post.events.contains(
                           'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.postsCollection}.documents.*.create')) {
                         posts.insert(0, Post.fromMap(post.payload));
+                      } else if (post.events.contains(
+                          'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.postsCollection}.documents.*.update')) {
+                        final int start =
+                            post.events[0].lastIndexOf('documents.');
+                        final int end = post.events[0].lastIndexOf('.update');
+                        final String postId =
+                            post.events[0].substring(start + 10, end);
+
+                        Post newPost =
+                            posts.where((Post post) => post.id == postId).first;
+                        final int postIndex = posts.indexOf(newPost);
+                        posts.removeWhere((Post post) => post.id == postId);
+
+                        newPost = Post.fromMap(post.payload);
+                        posts.insert(postIndex, newPost);
                       }
 
                       return postsList(posts);

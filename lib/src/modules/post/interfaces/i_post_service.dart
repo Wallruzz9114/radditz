@@ -12,4 +12,5 @@ abstract class IPostService {
   Future<List<model.Document>> getPosts();
   Stream<RealtimeMessage> getLatestPost();
   Future<Either<Failure, model.Document>> likePost(Post post);
+  Future<Either<Failure, model.Document>> sharePost(Post post);
 }

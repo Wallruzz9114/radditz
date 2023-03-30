@@ -92,4 +92,24 @@ class PostService implements IPostService {
       return left(Failure(error.toString(), stackTrace));
     }
   }
+
+  @override
+  Future<Either<Failure, model.Document>> sharePost(Post post) async {
+    try {
+      final model.Document response = await _databases.updateDocument(
+        databaseId: AppwriteConstants.databaseId!,
+        collectionId: AppwriteConstants.postsCollection!,
+        documentId: post.id,
+        data: <String, dynamic>{'reshareCount': post.reshareCount},
+      );
+
+      return right(response);
+    } on AppwriteException catch (error, stackTrace) {
+      return left(
+        Failure(error.message ?? 'Unexpected AppwriteException', stackTrace),
+      );
+    } catch (error, stackTrace) {
+      return left(Failure(error.toString(), stackTrace));
+    }
+  }
 }

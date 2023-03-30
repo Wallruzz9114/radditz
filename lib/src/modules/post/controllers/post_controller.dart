@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as model;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -103,5 +104,40 @@ class PostController extends StateNotifier<bool> {
         await _postService.likePost(post);
 
     response.fold((Failure l) => null, (model.Document r) => null);
+  }
+
+  Future<void> sharePost(
+    Post post,
+    AppUser currentUser,
+    BuildContext context,
+  ) async {
+    post = post.copyWith(
+      repostedBy: currentUser.username,
+      likes: <String>[],
+      commentIds: <String>[],
+      reshareCount: post.reshareCount + 1,
+    );
+
+    final Either<Failure, model.Document> response =
+        await _postService.sharePost(post);
+
+    response.fold(
+      (Failure f) => showSnackbar(context, f.message),
+      (model.Document d) async {
+        post = post.copyWith(
+          id: ID.unique(),
+          reshareCount: 0,
+          postedAt: DateTime.now(),
+        );
+
+        final Either<Failure, model.Document> shareResponse =
+            await _postService.sharePost(post);
+
+        shareResponse.fold(
+          (Failure f) => showSnackbar(context, f.message),
+          (model.Document d) => showSnackbar(context, 'Successfully reposted!'),
+        );
+      },
+    );
   }
 }
